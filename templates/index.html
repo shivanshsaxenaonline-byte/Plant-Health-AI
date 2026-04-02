@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Crop Disease Detection</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1><i class="fa-solid fa-leaf" style="color:#4caf50;"></i> Plant Health AI</h1>
+        <p class="subtitle">Smart & Farmer-Friendly Crop Disease Detection</p>
+    </header>
+
+    <form method="POST" action="/predict" enctype="multipart/form-data" id="uploadForm">
+        <div class="upload-box">
+            <input type="file" name="file" id="fileInput" accept="image/*" required onchange="previewImage(event)">
+            <div class="upload-text" id="uploadText">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <h3>Upload Leaf Image</h3>
+                <p>Drag and drop or click to browse</p>
+            </div>
+            <img id="preview" alt="Leaf Preview" />
+        </div>
+        <button type="submit" class="btn">
+            <i class="fa-solid fa-microchip"></i> Analyze Image
+        </button>
+    </form>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>AI is processing your image...</p>
+    </div>
+
+    {% if prediction %}
+    <div class="result-box">
+        <div class="result-header">
+            <h2>Disease: <span class="{% if 'healthy' in prediction.lower() %}healthy-name{% else %}disease-name{% endif %}">{{ prediction }}</span></h2>
+        </div>
+        
+        <div class="conf-wrapper">
+            <div class="conf-label">
+                <span>AI Confidence Score</span>
+                <span>{{ confidence }}%</span>
+            </div>
+            <div class="conf-bar">
+                <div class="conf-fill" id="confFill" data-width="{{ confidence }}" 
+                     style="background-color: {% if confidence > 80 %}#4caf50{% elif confidence > 50 %}#fb8c00{% else %}#e53935{% endif %};">
+                </div>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card technical-card" style="border-left-color: #2196f3;">
+                <h3><i class="fa-solid fa-microscope" style="color:#2196f3;"></i> Technical Details</h3>
+                <p>{{ description }}</p>
+            </div>
+            <div class="info-card technical-card" style="border-left-color: #ff9800;">
+                <h3><i class="fa-solid fa-flask" style="color:#ff9800;"></i> Expert Solution</h3>
+                <p>{{ solution }}</p>
+            </div>
+            
+            <div class="info-card local-card" style="border-left-color: #4caf50;">
+                <h3><i class="fa-solid fa-language" style="color:#4caf50;"></i> Aasan Bhasha (Lakshan)</h3>
+                <p>{{ simple_desc }}</p>
+            </div>
+            <div class="info-card local-card" style="border-left-color: #00897b;">
+                <h3><i class="fa-solid fa-hand-holding-hand" style="color:#00897b;"></i> Desi / Aasan Ilaaj</h3>
+                <p>{{ simple_sol }}</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if history %}
+    <div class="history">
+        <h3><i class="fa-solid fa-clock-rotate-left"></i> Recent Scans</h3>
+        <ul>
+            {% for item in history %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function(){
+            const img = document.getElementById('preview');
+            img.src = reader.result;
+            img.style.display = 'block';
+            document.getElementById('uploadText').style.display = 'none';
+        }
+        if(event.target.files[0]) {
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }
+
+    document.getElementById('uploadForm').addEventListener('submit', function() {
+        document.getElementById('loader').style.display = 'block';
+        const resultBox = document.querySelector('.result-box');
+        if(resultBox) resultBox.style.display = 'none';
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const fillBar = document.getElementById("confFill");
+        if(fillBar) {
+            setTimeout(() => {
+                fillBar.style.width = fillBar.getAttribute("data-width") + "%";
+            }, 150);
+        }
+    });
+</script>
+<script src="{{ url_for('static', filename='leaves.js') }}"></script>
+</body>
+</html>

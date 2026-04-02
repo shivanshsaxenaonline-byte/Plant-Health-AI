@@ -1,0 +1,84 @@
+/* --- Premium Base Styling --- */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+
+body { 
+    background: linear-gradient(135deg, #e0f2f1 0%, #c8e6c9 100%);
+    min-height: 100vh; display: flex; justify-content: center; align-items: center; 
+    padding: 40px 20px; color: #333; overflow-x: hidden; 
+}
+
+/* --- Floating Main Card --- */
+.container { 
+    background: #ffffff; width: 100%; max-width: 650px; border-radius: 24px; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08); padding: 40px; text-align: center; 
+    position: relative; overflow: hidden; 
+}
+.container::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, #4caf50, #009688); }
+
+h1 { color: #1b5e20; font-size: 28px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
+p.subtitle { color: #78909c; font-size: 15px; margin-bottom: 30px; }
+
+/* --- Interactive Upload Area --- */
+.upload-box { border: 2px dashed #a5d6a7; border-radius: 16px; padding: 50px 20px; background: #fcfdfc; cursor: pointer; margin-bottom: 25px; position: relative; transition: all 0.4s ease; }
+.upload-box:hover { background: #f1f8e9; border-color: #4caf50; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(76, 175, 80, 0.05); }
+.upload-box input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.upload-text i { font-size: 48px; color: #4caf50; margin-bottom: 15px; transition: 0.3s; }
+.upload-box:hover .upload-text i { transform: scale(1.1); color: #2e7d32; }
+.upload-text h3 { font-size: 18px; color: #37474f; margin-bottom: 5px; font-weight: 600; }
+.upload-text p { color: #90a4ae; font-size: 13px; }
+#preview { max-width: 100%; max-height: 250px; border-radius: 12px; display: none; margin: 0 auto; box-shadow: 0 8px 16px rgba(0,0,0,0.1); object-fit: cover; }
+
+/* --- Premium Gradient Button --- */
+.btn { background: linear-gradient(135deg, #43a047 0%, #1b5e20 100%); color: white; border: none; padding: 16px 24px; width: 100%; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(67, 160, 71, 0.3); display: flex; justify-content: center; align-items: center; gap: 10px; }
+.btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(67, 160, 71, 0.4); }
+.btn:active { transform: translateY(0); }
+
+/* --- Loader Animation --- */
+#loader { display: none; margin-top: 20px; }
+.spinner { border: 4px solid #e0e0e0; border-top: 4px solid #43a047; border-radius: 50%; width: 36px; height: 36px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
+#loader p { color: #546e7a; font-size: 14px; font-weight: 500; animation: pulse 1.5s infinite; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+
+/* --- Modern Result Section --- */
+.result-box { margin-top: 35px; padding: 30px; border-radius: 16px; background: #ffffff; border: 1px solid #eceff1; box-shadow: 0 10px 30px rgba(0,0,0,0.04); text-align: left; animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+.result-header h2 { font-size: 22px; color: #263238; font-weight: 700; }
+.disease-name { color: #d32f2f; }
+.healthy-name { color: #388e3c; } 
+
+/* --- Animated Confidence Bar --- */
+.conf-wrapper { margin-bottom: 25px; }
+.conf-label { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; color: #455a64; margin-bottom: 8px; }
+.conf-bar { width: 100%; background: #eceff1; border-radius: 8px; height: 12px; overflow: hidden; position: relative; }
+.conf-fill { height: 100%; border-radius: 8px; width: 0%; transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* --- Info Cards (Grid Layout) --- */
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+@media (max-width: 500px) { .info-grid { grid-template-columns: 1fr; } }
+.info-card { background: #f8fafc; padding: 16px; border-radius: 12px; border-top: 4px solid #43a047; transition: 0.3s; }
+.info-card:hover { background: #f1f8f1; transform: translateY(-2px); }
+.info-card h3 { font-size: 15px; color: #1b5e20; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.info-card p { font-size: 13px; color: #546e7a; line-height: 1.6; }
+
+/* --- History Tags --- */
+.history { margin-top: 30px; text-align: left; }
+.history h3 { font-size: 14px; color: #78909c; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.history ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.history li { font-size: 12px; font-weight: 500; background: #fff; padding: 6px 14px; border-radius: 20px; color: #546e7a; border: 1px solid #cfd8dc; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+
+/* --- LEAF ANIMATION CSS --- */
+.falling-leaf {
+    position: fixed; 
+    pointer-events: none; 
+    z-index: 9999; /* Isko bada kiya hai taaki leaves hamesha upar dikhein */
+    color: rgba(76, 175, 80, 0.7); 
+    animation: leafFall linear forwards;
+}
+
+@keyframes leafFall {
+    0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(150px) rotate(360deg) scale(1.5); opacity: 0; }
+}
